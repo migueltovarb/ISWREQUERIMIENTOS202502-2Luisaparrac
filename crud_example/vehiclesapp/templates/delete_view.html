@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Eliminar Vehículo</h1>
+
+<p>¿Estás seguro que deseas eliminar este vehículo?</p>
+
+<ul>
+    <li><strong>Placa:</strong> {{ object.placa }}</li>
+    <li><strong>Marca:</strong> {{ object.marca }}</li>
+    <li><strong>Modelo:</strong> {{ object.modelo }}</li>
+    <li><strong>Color:</strong> {{ object.get_color_display }}</li>
+</ul>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="/" class="btn btn-secondary">Cancelar</a>
+</form>
+
+{% endblock %}
