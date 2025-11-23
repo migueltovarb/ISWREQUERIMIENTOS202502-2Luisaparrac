@@ -1,0 +1,191 @@
+.dashboard-wrapper {
+    padding: 40px;
+}
+
+/* TITULO */
+.header-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1d1d1f;
+}
+
+.dashboard-subtitle {
+    font-size: 18px;
+    margin-top: 8px;
+    color: #666;
+}
+
+/* TARJETAS */
+.cards-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.card {
+    width: 300px;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.icon-yellow {
+    color: #ffcc2f;
+}
+
+.icon-purple {
+    color: #8b5cf6;
+}
+
+.icon-cyan {
+    color: #38bdf8;
+}
+
+.card-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 12px 18px;
+    background: #486ec8;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* SECCIÓN INFERIOR */
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.calendar-panel, .notes-panel {
+    background: #fff;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.notes-panel ul {
+    list-style: none;
+    padding: 0;
+}
+
+.notes-panel li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* CONTENEDOR GENERAL */
+.edit-user-container {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: #6b6b6b;
+    margin-bottom: 30px;
+}
+
+/* TARJETA */
+.edit-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    text-align: left;
+}
+
+/* CAMPOS */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 0 12px;
+    font-size: 1rem;
+    margin-top: 6px;
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0,123,255,0.3);
+}
+
+/* CHECKBOX */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.form-check label {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* BOTÓN */
+.save-btn {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    background: #0066d3;
+}

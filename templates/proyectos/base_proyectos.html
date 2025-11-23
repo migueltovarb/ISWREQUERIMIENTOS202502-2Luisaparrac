@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ProManager{% endblock %}</title>
+
+    <!-- Bootstrap CDN (sólo para estilos base usados en plantillas) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos del proyecto -->
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-left">
+            {% if user.is_authenticated %}
+                {% if user.rol == 'ADMIN' %}
+                    <a href="{% url 'usuarios:dashboard_admin' %}" class="logo-minimal" style="text-decoration:none;">
+                {% elif user.rol == 'JEFE' %}
+                    <a href="{% url 'usuarios:dashboard_jefe' %}" class="logo-minimal" style="text-decoration:none;">
+                {% else %}
+                    <a href="{% url 'usuarios:dashboard_usuario' %}" class="logo-minimal" style="text-decoration:none;">
+                {% endif %}
+            {% else %}
+                <a href="{% url 'usuarios:login' %}" class="logo-minimal" style="text-decoration:none;">
+            {% endif %}
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#1a73e8">
+                        <rect x="3" y="3" width="6" height="18" rx="2"></rect>
+                        <rect x="12" y="3" width="9" height="6" rx="2"></rect>
+                        <rect x="12" y="12" width="9" height="9" rx="2"></rect>
+                    </svg>
+                    <span class="brand-text">ProManager</span>
+                </a>
+            <a href="{% url 'tareas:listar_proyectos' %}" class="nav-link">Proyectos</a>
+            <a href="{% url 'tareas:listar_tareas' %}" class="nav-link">Tareas</a>
+        </div>
+        <div class="nav-right">
+            {% if request.user.is_authenticated %}
+                <span class="user-name">{{ request.user.email }}</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mt-4 mb-4 text-center text-muted">
+        <small>&copy; ProManager</small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

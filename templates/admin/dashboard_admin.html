@@ -1,0 +1,154 @@
+{% extends 'proyectos/base_proyectos.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard_admin.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+    <style>
+        
+        .calendar-section {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #calendar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            width: 720px;
+        }
+
+        .important {
+            background: white;
+            padding: 25px;
+            width: 300px;
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(50, 50, 93, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
+            align-self: center;
+        }
+
+        .important h3 {
+            font-weight: 700;
+            color: #1e2a40;
+            font-size: 1.05rem; /* ligeramente más grande pero no excesivo */
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        /* Título del calendario (subtítulo) centrado y más gordito */
+        .calendar-section > div > h2 {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #1e2a40;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        .important-item {
+            background: linear-gradient(135deg, #dceeff, #c5ddfa);
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #1a3d7c;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .important-item:hover {
+            transform: translateX(6px);
+            background: linear-gradient(135deg, #c8dffc, #b7cefa);
+            cursor: pointer;
+        }
+
+        /* Forzar números del calendario en negro */
+        .fc .fc-daygrid-day-number,
+        .fc .fc-daygrid-day-top .fc-daygrid-day-number {
+            color: #000 !important;
+            font-weight: 600;
+        }
+    </style>
+
+    <!-- TITULO CENTRADO COMO EL JEFE -->
+    <div class="header-section">
+        <h1 class="dashboard-title">Panel del Administrador</h1>
+        <p class="dashboard-subtitle">Gestiona el sistema de forma centralizada</p>
+    </div>
+
+    <!-- TARJETAS PRINCIPALES -->
+    <div class="cards-row">
+
+        <div class="card admin-card">
+            <div class="card-icon icon-yellow">🗂️</div>
+            <h3 class="card-title">Gestión de Proyectos</h3>
+            <p class="card-desc">Crear y administrar proyectos</p>
+            <a class="card-btn" href="{% url 'tareas:listar_proyectos' %}">Ir a Proyectos</a>
+        </div>
+
+        <div class="card admin-card">
+            <div class="card-icon icon-purple">👥</div>
+            <h3 class="card-title">Gestión de Usuarios</h3>
+            <p class="card-desc">Crear y gestionar cuentas de usuario</p>
+            <a class="card-btn" href="{% url 'usuarios:listar_usuarios' %}">Ir a Usuarios</a>
+        </div>
+
+        <div class="card admin-card">
+            <div class="card-icon icon-cyan">📊</div>
+            <h3 class="card-title">Reportes</h3>
+            <p class="card-desc">Visión general del sistema</p>
+            <a class="card-btn" href="{% url 'usuarios:reportes_general' %}">Ver reportes</a>
+        </div>
+
+    </div>
+
+    <!-- CALENDARIO E IMPORTANTE (estilo Jefe) -->
+    <div class="calendar-section">
+
+        <div>
+            <h2>Calendario</h2>
+            <div id="calendar"></div>
+        </div>
+
+        <div class="important">
+            <h2 class="dashboard-subtitle">Importante</h2>
+
+            <div class="important-item">21 Noviembre — Reunión inicial</div>
+            <div class="important-item">23 Noviembre — Entrega de requerimientos</div>
+            <div class="important-item">30 Noviembre — Revisión de avances</div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- SCRIPT DEL CALENDARIO -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        locale: "es",
+        height: "auto",
+        buttonText: { today: 'Hoy' },
+        events: [
+            { title: "Reunión inicial", start: "2025-11-21", color: "#7bb1d4" },
+            { title: "Entrega requerimientos", start: "2025-11-23", color: "#7bb1d4" },
+            { title: "Revisión de avances", start: "2025-11-30", color: "#7bb1d4" }
+        ]
+    });
+    calendar.render();
+});
+</script>
+
+{% endblock %}

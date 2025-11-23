@@ -1,0 +1,26 @@
+{% extends "proyectos/base_proyectos.html" %}
+{% load static %}
+
+{% block content %}
+<div class="estado-container">
+    <h2>Cambiar estado de la tarea</h2>
+    <p class="task-title">{{ tarea.nombre }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label class="form-label">Estado actual:</label>
+        <select name="estado" class="form-select">
+            {% for value, label in estados %}
+                <option value="{{ value }}" {% if tarea.estado == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <div style="margin-top:16px;">
+            <button class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

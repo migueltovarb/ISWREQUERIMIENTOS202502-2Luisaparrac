@@ -1,0 +1,139 @@
+{% extends 'proyectos/base_proyectos.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+    .user-card {
+        max-width: 520px;
+        margin: 50px auto;
+        border-radius: 18px;
+        padding: 35px 45px;
+        background: #ffffff;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .user-card h2 {
+        font-weight: 700;
+        font-size: 32px;
+        margin-bottom: 8px;
+        color: #111827;
+    }
+
+    .user-card p {
+        margin-bottom: 28px;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    .user-form .form-group {
+        text-align: left;
+        margin-bottom: 18px;
+    }
+
+    .user-form label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .user-form input,
+    .user-form select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        background: #f9fafb;
+        transition: all 0.2s;
+    }
+
+    .user-form input:focus,
+    .user-form select:focus {
+        border-color: #2563eb;
+        background: #fff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(37, 99, 235, .35);
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .checkbox-group label {
+        margin-bottom: 0;
+    }
+
+    .btn-primary {
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+    .btn-outline-secondary {
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="user-card">
+
+        <h2>Crear usuario</h2>
+        <p>Registra un nuevo usuario en el sistema</p>
+
+        <form method="post" class="user-form">
+            {% csrf_token %}
+
+            <!-- Nombre completo -->
+            <div class="form-group">
+                <label for="{{ form.nombre_completo.id_for_label }}">Nombre completo</label>
+                {{ form.nombre_completo }}
+                {{ form.nombre_completo.errors }}
+            </div>
+
+            <!-- Correo -->
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Correo</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <!-- Contraseña provisional -->
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Contraseña provisional</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+
+            <!-- Rol -->
+            <div class="form-group">
+                <label for="{{ form.rol.id_for_label }}">Rol</label>
+                {{ form.rol }}
+                {{ form.rol.errors }}
+            </div>
+
+            <!-- Activo -->
+            <div class="form-group checkbox-group">
+                <label for="{{ form.is_active.id_for_label }}">Activo</label>
+                {{ form.is_active }}
+                {{ form.is_active.errors }}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'usuarios:listar_usuarios' %}" class="btn btn-outline-secondary">Volver</a>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

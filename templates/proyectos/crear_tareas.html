@@ -1,0 +1,95 @@
+{% extends 'proyectos/base_proyectos.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/crear_tarea.css' %}">
+
+<div class="task-container">
+
+    <h2 class="title">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#1a73e8">
+            <path d="M9 11h6M9 16h6M5 7h14" stroke="#1a73e8" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Crear nueva tarea
+    </h2>
+
+    <p class="subtitle">Completa los campos para registrar una nueva tarea</p>
+
+    <form method="POST" class="task-form">
+        {% csrf_token %}
+
+        <!-- Nombre -->
+        <div class="field">
+            <label>Nombre</label>
+            <div class="input-icon">
+                <span></span>
+                {{ form.nombre }}
+            </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="field">
+            <label>Descripción</label>
+            <div class="input-icon">
+                <span></span>
+                {{ form.descripcion }}
+            </div>
+        </div>
+
+        <!-- Fecha límite -->
+        <div class="field">
+            <label>Fecha límite</label>
+            <div class="input-icon">
+                <span></span>
+                {{ form.fecha_limite }}
+            </div>
+        </div>
+
+        <!-- Prioridad -->
+        <div class="field">
+            <label>Prioridad</label>
+            <div class="input-icon">
+                <span></span>
+                {{ form.prioridad }}
+            </div>
+        </div>
+
+        <!-- Proyecto -->
+        <div class="field">
+            <label>Proyecto</label>
+            <div class="input-icon">
+                <span>📁</span>
+                {{ form.proyecto }}
+            </div>
+        </div>
+
+        <!-- Asignados -->
+        <div class="field">
+            <label>Asignados</label>
+
+            <div class="user-list">
+                {% for user in form.asignados.field.queryset %}
+                    {% if user.rol|default:""|lower != 'admin' and user.rol|default:""|lower != 'jefe' %}
+                    <label class="user-item">
+                        <input type="checkbox"
+                               name="asignados"
+                               value="{{ user.id }}"
+                               {% if user in form.asignados.initial %}checked{% endif %}>
+
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name={{ user.nombre_completo|default:user.email|urlencode }}&background=7c3aed&color=fff&rounded=true">
+                        </div>
+
+                        <span class="user-name">{{ user.nombre_completo|default:user.email }}</span>
+                    </label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <button class="btn-submit">Registrar nueva tarea</button>
+    </form>
+</div>
+
+{% endblock %}

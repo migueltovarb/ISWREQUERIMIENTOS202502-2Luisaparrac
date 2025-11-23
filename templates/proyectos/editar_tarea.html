@@ -1,0 +1,229 @@
+{% extends 'proyectos/base_proyectos.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="edit-card">
+    <h2 class="title"> Editar tarea</h2>
+    <p class="subtitle">Modifica los datos de la tarea seleccionada</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Nombre -->
+        <div class="form-group">
+            <label>Nombre</label>
+            {{ form.nombre }}
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group">
+            <label>Descripción</label>
+            {{ form.descripcion }}
+        </div>
+
+        <!-- Fecha límite -->
+        <div class="form-group">
+            <label>Fecha límite</label>
+            {{ form.fecha_limite }}
+        </div>
+
+        <!-- Prioridad -->
+        <div class="form-group">
+            <label>Prioridad</label>
+            {{ form.prioridad }}
+        </div>
+
+        <!-- Proyecto -->
+        <div class="form-group">
+            <label>Proyecto</label>
+            {{ form.proyecto }}
+        </div>
+
+        <!-- Asignados -->
+        <div class="form-group">
+            <label>Asignados</label>
+
+                <div class="user-list">
+                    {% for user in form.asignados.field.queryset %}
+                        {# Excluir administradores y jefes (sin tocar backend) #}
+                        {% if user.rol|default:""|lower != 'admin' and user.rol|default:""|lower != 'jefe' %}
+                        <label class="user-item" title="{{ user.nombre_completo|default:user.email }}">
+                            <!-- Checkbox colocado antes del body para permitir selector + -->
+                            <input class="user-checkbox" type="checkbox" name="asignados" value="{{ user.id }}" {% if user in form.instance.asignados.all %}checked{% endif %}>
+
+                            <div class="user-card-body">
+                                <div class="avatar">{{ user.nombre_completo|default:user.email|slice:":2"|upper }}</div>
+                                <div class="user-email">{{ user.nombre_completo|default:user.email }}</div>
+                            </div>
+                        </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-save" type="submit">Guardar cambios</button>
+        </div>
+
+    </form>
+</div>
+
+<style>
+
+.edit-card {
+    max-width: 700px;
+    margin: auto;
+    background: #fff;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #0a3b65;
+}
+
+.subtitle {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Inputs */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    display: block;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d0d7e2;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+textarea {
+    height: 130px;
+}
+
+
+.user-list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 14px;
+    margin-top: 8px;
+}
+
+/* Responsive columns: 1 (xs), 2 (sm), 3 (md), 4 (lg+) */
+@media (min-width: 576px) {
+    .user-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 768px) {
+    .user-list { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 992px) {
+    .user-list { grid-template-columns: repeat(4, 1fr); }
+}
+
+.user-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid #e6eef8;
+    box-shadow: 0 6px 18px rgba(11, 32, 57, 0.06);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    position: relative;
+}
+
+.user-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(11,32,57,0.09);
+}
+
+.user-checkbox { transform: scale(1.15); accent-color: #1a73e8; margin-top:6px; }
+
+.user-card-body { display:flex; flex-direction:column; align-items:center; gap:8px; min-height:78px; padding: 8px 6px 12px; }
+
+/* Visual selection: cuando el checkbox está marcado, resaltar la tarjeta */
+.user-checkbox:checked + .user-card-body {
+    border-radius: 10px;
+    box-shadow: 0 14px 36px rgba(26,115,232,0.12);
+    transform: translateY(-4px);
+    border: 1px solid rgba(26,115,232,0.22);
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    /* Nuevo gradiente más amable */
+    background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 8px 20px rgba(12, 31, 92, 0.12);
+}
+
+.user-email {
+    font-size: 13px;
+    color: #334155;
+    text-align: center;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+/* Botones */
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-save {
+    background: #1a73e8;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background: #155fc7;
+}
+
+.btn-cancel {
+    background: #d0d7e2;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+.btn-cancel:hover {
+    background: #bcc5d0;
+}
+
+</style>
+
+{% endblock %}

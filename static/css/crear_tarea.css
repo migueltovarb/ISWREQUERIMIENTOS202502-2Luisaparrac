@@ -1,0 +1,112 @@
+.task-container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a3b6c;
+}
+
+.subtitle {
+    margin-top: -5px;
+    font-size: 15px;
+    color: #555;
+}
+
+.task-form {
+    margin-top: 20px;
+}
+
+.field {
+    margin-bottom: 18px;
+}
+
+.field label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1a3b6c;
+}
+
+.input-icon {
+    display: flex;
+    align-items: center;
+    background: #f3f6fb;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-top: 5px;
+    border: 1px solid #dce3f0;
+}
+
+.input-icon span {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.input-icon input,
+.input-icon textarea,
+.input-icon select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    outline: none;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f8faff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #dde6f3;
+    margin-top: 5px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.user-item input {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.user-avatar img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #1a3b6c;
+}
+
+.btn-submit {
+    width: 100%;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #1459b3;
+}

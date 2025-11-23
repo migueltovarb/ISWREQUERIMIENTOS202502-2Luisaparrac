@@ -1,0 +1,197 @@
+{% extends 'proyectos/base_proyectos.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+    /* CONTENEDOR PRINCIPAL */
+    .task-wrapper {
+        background: #ffffff;
+        padding: 25px 30px;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        margin-top: 20px;
+    }
+
+    /* TITULOS */
+    .task-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 5px;
+    }
+
+    .task-subtitle {
+        color: #64748b;
+        margin-bottom: 25px;
+        font-size: 15px;
+    }
+
+    /* TABLA */
+    .task-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+
+    .task-table th {
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 700;
+        color: #475569;
+        padding-bottom: 8px;
+    }
+
+    .task-row {
+        background: #f8fafc;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .task-row td {
+        padding: 18px 20px;
+        vertical-align: middle;
+        font-size: 15px;
+        color: #334155;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+    }
+
+    /* PRIORIDAD BADGE */
+    .priority-badge {
+        padding: 6px 12px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .p-alta { background:#fee2e2; color:#b91c1c; }
+    .p-media { background:#fef3c7; color:#b45309; }
+    .p-baja { background:#dcfce7; color:#15803d; }
+
+    /* USUARIOS */
+    .assigned-user {
+        background: #e9edfb;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin: 3px;
+        color: #1e3a8a;
+    }
+    .assigned-user i {
+        color: #4c6fff;
+    }
+
+    /* ACCIONES */
+    .task-actions {
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .action-btn {
+        border: none;
+        padding: 8px;
+        margin: 0 4px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 15px;
+        width: 36px;
+        height: 36px;
+        justify-content: center;
+        align-items: center;
+        display: inline-flex;
+        transition: 0.2s;
+    }
+
+    .btn-edit {
+        background: #2563eb;
+        color: white;
+    }
+    .btn-edit:hover { background: #1d4ed8; }
+
+    .btn-delete {
+        background: #ef4444;
+        color: white;
+    }
+    .btn-delete:hover { background: #dc2626; }
+
+</style>
+
+<div class="container mt-4 task-wrapper">
+
+    <!-- TITULO -->
+    <h1 class="task-title">Tareas del proyecto</h1>
+    <p class="task-subtitle">Consulta, edita y administra las tareas registradas</p>
+
+    <!-- TABLA PROFESIONAL -->
+    <table class="task-table">
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Proyecto</th>
+                <th>Prioridad</th>
+                <th>Fecha límite</th>
+                <th>Asignados</th>
+                <th style="text-align:center;">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for tarea in tareas %}
+            <tr class="task-row">
+                <td class="fw-semibold">{{ tarea.nombre }}</td>
+                <td>{{ tarea.proyecto.nombre }}</td>
+
+                <td>
+                    {% if tarea.prioridad == "ALTA" %}
+                        <span class="priority-badge p-alta">Alta</span>
+                    {% elif tarea.prioridad == "MEDIA" %}
+                        <span class="priority-badge p-media">Media</span>
+                    {% else %}
+                        <span class="priority-badge p-baja">Baja</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ tarea.fecha_limite|date:"d M, Y" }}</td>
+
+                <td>
+                    {% for u in tarea.asignados.all %}
+                    <span class="assigned-user">
+                        <i class="fa-solid fa-user"></i> {{ u.email }}
+                    </span>
+                    {% endfor %}
+                </td>
+
+                <td class="task-actions">
+                    <a href="{% url 'tareas:editar_tarea' tarea.id %}" class="action-btn btn-edit">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <a href="{% url 'tareas:eliminar_tarea' tarea.id %}"
+                       class="action-btn btn-delete"
+                       onclick="return confirm('¿Seguro que deseas eliminar esta tarea?');">
+                       <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center py-4 text-muted">
+                    No hay tareas creadas aún.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

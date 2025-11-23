@@ -1,0 +1,145 @@
+{% extends 'proyectos/base_proyectos.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+    .report-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .report-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        color: #1c1f23;
+        margin-bottom: 10px;
+    }
+
+    .report-subtitle {
+        text-align: center;
+        color: #6b7280;
+        font-size: 16px;
+        margin-bottom: 35px;
+    }
+
+    .metric-card {
+        background: #f9fafb;
+        border-radius: 14px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        transition: transform .2s;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .metric-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 10px;
+    }
+
+    .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1e3a8a;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+    thead tr th {
+        padding: 14px;
+        background: #eef2ff;
+        color: #1e3a8a;
+        font-weight: 600;
+        border-radius: 10px 10px 0 0;
+    }
+
+    tbody tr {
+        background: #ffffff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-radius: 12px;
+    }
+
+    tbody tr td {
+        padding: 16px;
+        color: #374151;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="report-container">
+
+    <h1 class="report-title">Reporte de {{ user_obj.nombre_completo }}</h1>
+    <p class="report-subtitle">Resumen de desempeño y tareas asignadas</p>
+
+    <div class="row text-center mb-4">
+        
+        <div class="col-md-3 mb-3">
+            <div class="metric-card">
+                <p class="metric-title">Tareas asignadas</p>
+                <p class="metric-value">{{ total }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="metric-card">
+                <p class="metric-title">Completadas</p>
+                <p class="metric-value">{{ completed }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="metric-card">
+                <p class="metric-title">Retrasadas</p>
+                <p class="metric-value">{{ delayed }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="metric-card">
+                <p class="metric-title">Avance</p>
+                <p class="metric-value">{{ percent_complete }}%</p>
+            </div>
+        </div>
+
+    </div>
+
+    <h3 class="mt-4 mb-3" style="font-weight:700;">Detalle de tareas</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Proyecto</th>
+                <th>Estado</th>
+                <th>Fecha límite</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tareas %}
+            <tr>
+                <td>{{ t.nombre }}</td>
+                <td>{% if t.proyecto %}{{ t.proyecto.nombre }}{% else %}—{% endif %}</td>
+                <td>{{ t.get_estado_display }}</td>
+                <td>{{ t.fecha_limite }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "proyectos/base_proyectos.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<h2 class="mb-3 fw-bold">Equipo y asignaciones</h2>
+<p class="page-subtitle">Visualiza qué tareas tiene cada miembro del equipo y gestiona su estado.</p>
+
+<div class="equipo-grid">
+
+    {% now "Y-m-d" as today %}
+
+    {% for u in usuarios %}
+        {# Excluir administradores y jefes del listado de equipo #}
+        {% if u.rol|default:""|lower != 'admin' and u.rol|default:""|lower != 'jefe' %}
+    <div class="user-card">
+
+        <style>
+        .task-status.status-retrasada {
+            background: #fde2e2;
+            color: #9f1239;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        </style>
+
+        <!-- Avatar -->
+        {% with display_name=u.nombre_completo|default:u.email %}
+        <div class="avatar-circle">
+            {{ display_name.0|upper }}
+        </div>
+
+        <h4 class="user-email">{{ display_name }}</h4>
+        {% endwith %}
+        <p class="user-role">{{ u.get_rol_display }}</p>
+
+        <hr class="divider">
+
+        <!-- Si tiene tareas asignadas -->
+        {% if u.tareas_asignadas.all %}
+            {% if u.tareas_asignadas.count > 0 %}
+                <ul class="task-list">
+
+                    {% for t in u.tareas_asignadas.all %}
+                    <li class="task-item">
+
+                        <div class="task-header">
+                            <strong class="task-title">{{ t.nombre }}</strong>
+                            {% comment %} Mostrar estado personalizado: si está fuera de plazo y no está completada, marcar como 'Retrasada' {% endcomment %}
+                            {% if t.fecha_limite|date:"Y-m-d" < today and t.estado != 'C' %}
+                                <span class="task-status status-retrasada">Retrasada</span>
+                            {% else %}
+                                <span class="task-status status-{{ t.estado }}">{{ t.get_estado_display }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="task-info">
+                            <span class="task-meta">{{ t.proyecto.nombre }}</span>
+                            <span class="task-date">Fecha límite: {{ t.fecha_limite }}</span>
+                        </div>
+
+                        {% if request.user.rol == u.Rol.JEFE %}
+                        <a href="{% url 'tareas:editar_estado' t.id %}" class="edit-btn">Editar estado</a>
+                        {% endif %}
+
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            {% else %}
+                <p class="no-tasks">No tiene tareas asignadas.</p>
+            {% endif %}
+        {% else %}
+            <p class="no-tasks">No tiene tareas asignadas.</p>
+        {% endif %}
+
+    </div>
+        {% endif %}
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+

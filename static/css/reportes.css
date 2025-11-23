@@ -1,0 +1,102 @@
+/* ===== CONTENEDOR GENERAL ===== */
+.reportes-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* ===== TITULOS ===== */
+.titulo {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* ===== TARJETAS ===== */
+.top-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    text-align: center;
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.valor {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1E60FF;
+}
+
+/* ===== SECCION TITULOS ===== */
+.seccion-titulo {
+    font-size: 26px;
+    margin: 40px 0 20px;
+    font-weight: bold;
+}
+
+/* ===== TARJETAS DE PROYECTO ===== */
+.proyecto-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.proyecto-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.cantidad {
+    color: #666;
+    font-size: 14px;
+}
+
+.jefe-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #1E60FF;
+    color: white;
+    font-weight: 600;
+}
+
+.sin-jefe {
+    background: #999;
+}
+
+/* ===== FECHAS ===== */
+.fechas-box {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+    max-width: 400px;
+}

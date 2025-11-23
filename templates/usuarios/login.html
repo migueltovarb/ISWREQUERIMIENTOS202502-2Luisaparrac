@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+<div class="login-container">
+    <div class="login-card">
+
+        <h1>Iniciar sesión</h1>
+        <p>Ingresa tus credenciales para acceder al sistema.</p>
+
+        {% if form.non_field_errors %}
+            <div class="error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="correo">Correo electrónico*</label>
+            {{ form.correo }}
+            {% for error in form.correo.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+
+            <label for="password">Contraseña*</label>
+            {{ form.password }}
+            {% for error in form.password.errors %}
+                <p class="error">{{ error }}</p>
+            {% endfor %}
+
+            <button type="submit">Ingresar</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

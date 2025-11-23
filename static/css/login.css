@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #f2f4f7;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background: #ffffff;
+    padding: 40px;
+    width: 380px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.login-card h1 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    color: #222;
+}
+
+.login-card p {
+    margin-bottom: 25px;
+    color: #555;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="email"], 
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all .2s ease;
+}
+
+input:focus {
+    border-color: #4379ee;
+    outline: none;
+    box-shadow: 0 0 4px #4379ee99;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #4379ee;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+button:hover {
+    background: #2d5fcc;
+}
+
+.error {
+    color: #d93025;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
